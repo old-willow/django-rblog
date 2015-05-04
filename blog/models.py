@@ -2,6 +2,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+from django_markdown.models import MarkdownField
+
 
 class Author(models.Model):
     user = models.ForeignKey(User)
@@ -71,8 +73,8 @@ class Entry(models.Model):
     modified_date = models.DateTimeField('modified date',
                                          auto_now=True,
                                          help_text='date when the blog entry was modified last time.')
-    body = models.TextField('entry',
-                            help_text='the blog entry itself.')
+    body = MarkdownField('entry',
+                         help_text='the blog entry itself.')
     enable_comments = models.BooleanField('enable comments', default=False)
     featured = models.BooleanField('featured', default=False)
 
