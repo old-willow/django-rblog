@@ -7,7 +7,7 @@ from django_markdown.models import MarkdownField
 
 class Author(models.Model):
     user = models.ForeignKey(User)
-    username = models.CharField('first name', max_length=100)
+    username = models.CharField('user name', max_length=100)
     #firstname = models.CharField('first name', max_length=100)
     #lastname = models.CharField('last name', max_length=100)
 
@@ -17,7 +17,7 @@ class Author(models.Model):
         ordering = ['username', ]
 
     def __unicode__(self):
-        return self.user
+        return self.username
 
 
 class Category(models.Model):
@@ -43,7 +43,7 @@ class EntryPublishableQuerySet(models.QuerySet):
     Returning blogs that are publishable.
     """
     def publishable(self):
-        return self.filter(publishable=True)
+        return self.filter(publishable=True, status=1)
 
 class EntryNotPublishableQuerySet(models.QuerySet):
     """

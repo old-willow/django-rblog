@@ -2,11 +2,17 @@
 <html>
 
     <head>
-        <title></title>
+        <title>List of published blogs</title>
     </head>
 
     <body>
-    <p>This is blog test</p>
+
+    <h3>List of blogs</h3>
+
+    {% for object in object_list %}
+    {{ object.title }}
+    {% endfor %}
+
     </body>
 
 </html>
