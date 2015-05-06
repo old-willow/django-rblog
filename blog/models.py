@@ -6,18 +6,30 @@ from django_markdown.models import MarkdownField
 
 
 class Author(models.Model):
-    user = models.ForeignKey(User)
-    username = models.CharField('user name', max_length=100)
-    #firstname = models.CharField('first name', max_length=100)
-    #lastname = models.CharField('last name', max_length=100)
+    #user = models.ForeignKey(User)
+    #username = models.CharField('user name', max_length=100)
+
+    NULL = '0'
+    M = '1'
+    F = '2'
+    GENDER = (
+        (NULL, 'Choose Gender'),
+        (M, 'Male'),
+        (F, 'Female'),
+    )
+
+    gender = models.CharField('gender', max_length=1,
+                              choices=GENDER, default=NULL)
+    firstname = models.CharField('first name', max_length=100)
+    lastname = models.CharField('last name', max_length=100)
 
     class Meta:
-        verbose_name = 'user name'
-        verbose_name_plural = 'user names'
-        ordering = ['username', ]
+        verbose_name = 'author'
+        verbose_name_plural = 'authors'
+        ordering = ['firstname', ]
 
     def __unicode__(self):
-        return self.username
+        return self.firstname
 
 
 class Category(models.Model):

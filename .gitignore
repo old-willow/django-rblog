@@ -1,3 +1,4 @@
 *.pyc
-.backup/
-.swap/
+*.backup
+*.swap
+session.vim
