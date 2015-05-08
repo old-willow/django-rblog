@@ -1,18 +1,24 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
+{% load django_markdown %}
 
-    <head>
-        <title>List of published blogs</title>
-    </head>
+{% block title %}
+List of published blogs
+{% endblock %}
 
-    <body>
+{% block header %}
+List of blogs
+{% endblock %}
 
-    <h3>List of blogs</h3>
-
-    {% for object in object_list %}
-    {{ object.title }}
-    {% endfor %}
-
-    </body>
-
-</html>
+{% block blog_entries %}
+{% for object in object_list %}
+<div class="row">
+    <div class="col-md-4">
+        <h2>{{ object.title }}</h2>
+        <p class="meta">Date:{{ object.pub_date }}</p>
+        <p class="dimmed">Category: {{ object.category.title }}</p>
+        <p>{{ object.body }}</p>
+        <!--<p><a class="btn btn-default" href="{% comment %}{% url "blog:detail" %}{% endcomment %}" role="button">Read Article »</a></p>-->
+    </div>
+</div>
+{% endfor %}
+{% endblock %}

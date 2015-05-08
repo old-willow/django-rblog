@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 
 from .models import Entry
 
@@ -18,3 +18,7 @@ class BlogIndex(ListView):
     template_name = 'blog/blog_list.html'
     paginate_by = 2
     context_object_name = 'object_list'  # This is allready by default.
+
+
+class BlogDetailView(DetailView):
+    pass
