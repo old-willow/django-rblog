@@ -53,14 +53,12 @@ class Category(models.Model):
 class EntryPublishableQuerySet(models.QuerySet):
     """
     Returning blogs that are publishable.
+    &
+    Returning blogs that are not yet publishable.
     """
     def publishable(self):
         return self.filter(publishable=True, status=1)
 
-class EntryNotPublishableQuerySet(models.QuerySet):
-    """
-    Returning blogs that are not yet publishable.
-    """
     def not_publishable(self):
         return self.filter(publishable=False)
 
@@ -103,7 +101,6 @@ class Entry(models.Model):
 
     objects = models.Manager()
     published = EntryPublishableQuerySet().as_manager()
-    not_published = EntryNotPublishableQuerySet().as_manager()
 
     class Meta:
         ordering = ['-pub_date', ]
