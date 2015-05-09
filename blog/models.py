@@ -35,12 +35,12 @@ class Author(models.Model):
 class Category(models.Model):
     title = models.CharField('title',
                              max_length=100,
-                             help_text='title of the category.')
+                             help_text='Title of the category.')
     slug = models.SlugField('slug',
                             help_text='slug filed.')
     description = models.TextField('category description',
                                    blank=True, null=True, default=None,
-                                   help_text='description of the category.')
+                                   help_text='Description of the category.')
 
     class Meta:
         verbose_name = 'category/topic'
@@ -67,24 +67,24 @@ class Entry(models.Model):
     title = models.CharField('title',
                              max_length=255,
                              unique_for_date='pub_date',
-                             help_text='title of the blog entry.')
+                             help_text='Title of the blog entry.')
     author = models.ForeignKey(Author, verbose_name='author of the blog')
     slug = models.SlugField('slug',
-                            help_text='slug field.')
-    category = models.ManyToManyField(Category,
-                                      verbose_name='category',
-                                      help_text='Choosing a category or topic.')
+                            help_text='Slug field.')
+    category = models.ForeignKey(Category,
+                                 verbose_name='category',
+                                 help_text='Choosing a category or topic.')
     publishable = models.BooleanField('is publishable?',
                                       default=False,
-                                      help_text='is this blog entry publishable?')
+                                      help_text='Is this blog entry publishable?')
     pub_date = models.DateTimeField('publication date',
                                     auto_now_add=True,
-                                    help_text='date when the blog entry was created.')
+                                    help_text='Date when the blog entry was created.')
     modified_date = models.DateTimeField('modified date',
                                          auto_now=True,
-                                         help_text='date when the blog entry was modified last time.')
+                                         help_text='Date when the blog entry was modified last time.')
     body = MarkdownField('entry',
-                         help_text='the blog entry itself.')
+                         help_text='The blog entry itself.')
     enable_comments = models.BooleanField('enable comments', default=False)
     featured = models.BooleanField('featured', default=False)
 
@@ -118,12 +118,12 @@ class Link(models.Model):
                             help_text='slug filed.')
     date_added = models.DateTimeField('date added',
                                       auto_now_add=True,
-                                      help_text='date when the link is added to entry.')
+                                      help_text='Date when the link is added to entry.')
     entry = models.ManyToManyField(Entry, verbose_name='associated entry',
-                                  help_text='entry to which link is associated.')
+                                  help_text='Entry to which link is associated.')
     description = models.TextField('link description',
                                    blank=True, null=True, default=None,
-                                   help_text='description of the link.')
+                                   help_text='Description of the link.')
 
     class Meta:
         ordering = ['-date_added', ]

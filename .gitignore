@@ -1,3 +1,5 @@
 *.pyc
 *.backup
 *.swap
+*/migrations/
+db.sqlite3
