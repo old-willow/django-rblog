@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django_markdown.admin import MarkdownModelAdmin
 
-from .models import Author, Category, Entry, Link
+from .models import Author, Category, Entry, Image, Link
 
 
 class EntryAdmin(MarkdownModelAdmin):
@@ -14,5 +14,6 @@ class CategoryAdmin(admin.ModelAdmin):
 
 admin.site.register(Author)
 admin.site.register(Category, CategoryAdmin)
+admin.site.register(Image)
 admin.site.register(Link)
 admin.site.register(Entry, EntryAdmin)

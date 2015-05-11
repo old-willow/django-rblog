@@ -16,7 +16,7 @@ def blog_list(request):
 class BlogIndex(ListView):
     queryset = Entry.published.publishable()
     template_name = 'blog/blog_list.html'
-    paginate_by = 2
+    paginate_by = 3
     context_object_name = 'object_list'  # This is allready by default.
 
 

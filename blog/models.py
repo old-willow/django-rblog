@@ -111,6 +111,27 @@ class Entry(models.Model):
         return self.title
 
 
+class Image(models.Model):
+    name = models.ImageField(upload_to='blog_images/%Y/%m/%d',
+                             blank=True, null=True,
+                             help_text='Upload an image file.')
+
+    entry = models.ForeignKey(Entry,
+                              help_text='Related blog to this image.')
+ 
+    upload_date = models.DateTimeField('upload date',
+                                       auto_now_add=True,
+                                       help_text='Date when the link is added to entry.')
+
+    class Meta:
+        verbose_name = 'image'
+        verbose_name_plural = 'images'
+        ordering = ['-upload_date', ]
+
+    def __unicode__(self):
+        return self.name
+
+
 class Link(models.Model):
     title = models.CharField('title', max_length=100)
 
