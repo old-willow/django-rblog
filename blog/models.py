@@ -110,6 +110,9 @@ class Entry(models.Model):
     def __unicode__(self):
         return self.title
 
+    def grab_body_part(self):
+        return self.body[0:250]
+
 
 class Image(models.Model):
     name = models.ImageField(upload_to='blog_images/%Y/%m/%d',
@@ -118,7 +121,7 @@ class Image(models.Model):
 
     entry = models.ForeignKey(Entry,
                               help_text='Related blog to this image.')
- 
+
     upload_date = models.DateTimeField('upload date',
                                        auto_now_add=True,
                                        help_text='Date when the link is added to entry.')
