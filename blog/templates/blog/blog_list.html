@@ -17,7 +17,11 @@ List of blogs
         <p class="meta">Date:{{ object.pub_date }}</p>
         <p class="dimmed">Category: {{ object.category.title }}</p>
         <p>{{ object.grab_body_part }}...</p>
-        <p><a class="btn btn-default" href="{% comment %}{% url "blog:detail" %}{% endcomment %}" role="button">Read Article »</a></p>
+        <br />
+        <p>{{ object.pub_date|date:"Y b d" }}</p>
+        <p>{{ object.pub_date|date:"Y" }}|{{ object.pub_date|date:"b" }}|{{ object.pub_date|date:"d" }}/{{ object.slug }}</p>
+        {% comment %}<p><a class="btn btn-default" href="{% url "blog:test" year=object.pub_date|date:"Y" month=object.pub_date|date:"b" day=object.pub_date|date:"d" slug=object.slug %}" role="button">Test View »</a></p>{% endcomment %}
+        <p><a class="btn btn-default" href="{% url "blog:detail" year=object.pub_date|date:"Y" month=object.pub_date|date:"b" day=object.pub_date|date:"d" slug=object.slug %}" role="button">Read Article »</a></p>
     </div>
 </div>
 {% endfor %}

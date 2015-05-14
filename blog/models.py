@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 
 from django_markdown.models import MarkdownField
 
@@ -112,6 +113,14 @@ class Entry(models.Model):
 
     def grab_body_part(self):
         return self.body[0:250]
+
+    def get_absolute_url(self):
+        return reverse('blog:detail', kwargs={
+            'year': self.pub_date.year.strftime('%Y'),
+            'month': self.pub_date.month.strftime('%b').lower(),
+            'day': self.pub_date.day.strftime('%d'),
+            'slug': self.slug}
+        )
 
 
 class Image(models.Model):

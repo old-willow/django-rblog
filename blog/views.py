@@ -21,4 +21,37 @@ class BlogIndex(ListView):
 
 
 class BlogDetailView(DetailView):
-    pass
+    model = Entry
+    template_name = 'blog/blog_detail.html'
+    #date_field = 'pub_date'
+    slug_field = 'slug'
+    context_object_name = 'entry'
+    queryset = Entry.objects.all()
+
+    #def get_queryset(self):
+    #    self.year = self.kwargs['year']
+    #    self.month = self.kwargs['month']
+    #    self.day = self.kwargs['day']
+    #    self.slug = self.kwargs['slug']
+    #    return Entry.objects.get(year=self.year,
+    #                             month=self.month,
+    #                             day=self.day,
+    #                             slug=self.slug)
+
+    #def get_queryset(self):
+    #    return Entry.objects.all()
+
+def blog_detail(request, year, month, day, slug):
+    query = Entry.objects.get(year=year, month=month, day=day, slug=slug)
+    context = {
+        'query': query,
+    }
+
+    return render_to_response('blog/blog_detail.html',
+                              context,
+                              context_instance=RequestContext(request))
+
+def test_view(request, year, month, day, slug):
+    return render_to_response('blog/blog_detail.html',
+                              {},
+                              context_instance=RequestContext(request))
