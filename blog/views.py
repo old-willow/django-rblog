@@ -14,11 +14,50 @@ def blog_list(request):
 
 
 class BlogIndex(ListView):
+    model = Entry
     queryset = Entry.published.publishable()
     template_name = 'blog/blog_list.html'
-    paginate_by = 3
+    #paginate_by = 3
     context_object_name = 'object_list'  # This is allready by default.
 
+
+class BlogYearList(ListView):
+    model = Entry
+    #queryset = Entry.objects.filter(year=self.kwargs['year'], publishable=True)
+    #queryset = Entry.objects.all()
+    template_name = 'blog/blog_year_list.html'
+    context_object_name = 'object_list'
+
+    def get_queryset(self):
+        query = Entry.objects.filter(publishable=True, pub_date__year=self.kwargs['year'])
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogYearList, self).get_context_data(**kwargs)
+        context['year'] = self.kwargs['year']
+        context['header'] = u'List of blogs in ' + unicode(context['year'])
+        return context
+
+
+class BlogYearMonthList(ListView):
+    model = Entry
+    #queryset = Entry.objects.filter(year=self.kwargs['year'], month=self.kwargs['month'], publishable=True)
+    #queryset = Entry.objects.all()
+    template_name = 'blog/blog_year_list.html'
+    context_object_name = 'object_list'
+
+    def get_queryset(self):
+        query = Entry.objects.filter(publishable=True,
+                                     pub_date__year=self.kwargs['year'],
+                                     pub_date__month=self.kwargs['month'])
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogYearMonthList, self).get_context_data(**kwargs)
+        context['year'] = self.kwargs['year']
+        context['month'] = self.kwargs['month']
+        context['header'] = u'List of blogs in ' + unicode(context['year'] + ', ' + unicode(self.kwargs['month']))
+        return context
 
 class BlogDetailView(DetailView):
     model = Entry
@@ -37,21 +76,3 @@ class BlogDetailView(DetailView):
     #                             month=self.month,
     #                             day=self.day,
     #                             slug=self.slug)
-
-    #def get_queryset(self):
-    #    return Entry.objects.all()
-
-def blog_detail(request, year, month, day, slug):
-    query = Entry.objects.get(year=year, month=month, day=day, slug=slug)
-    context = {
-        'query': query,
-    }
-
-    return render_to_response('blog/blog_detail.html',
-                              context,
-                              context_instance=RequestContext(request))
-
-def test_view(request, year, month, day, slug):
-    return render_to_response('blog/blog_detail.html',
-                              {},
-                              context_instance=RequestContext(request))

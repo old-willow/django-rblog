@@ -63,6 +63,9 @@ class EntryPublishableQuerySet(models.QuerySet):
     def not_publishable(self):
         return self.filter(publishable=False)
 
+    def year_list(self, year):
+        return self.filter(publishable=True, year=year)
+
 
 class Entry(models.Model):
     title = models.CharField('title',
@@ -116,15 +119,15 @@ class Entry(models.Model):
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={
-            'year': self.pub_date.year.strftime('%Y'),
-            'month': self.pub_date.month.strftime('%b').lower(),
-            'day': self.pub_date.day.strftime('%d'),
+            'year': self.pub_date.strftime("%Y"),
+            'month': self.pub_date.strftime("%b").lower(),
+            'day': self.pub_date.strftime("%d"),
             'slug': self.slug}
         )
 
 
 class Image(models.Model):
-    name = models.ImageField(upload_to='blog_images/%Y/%m/%d',
+    name = models.ImageField(upload_to='blog_images/%Y/%b/%d',
                              blank=True, null=True,
                              help_text='Upload an image file.')
 

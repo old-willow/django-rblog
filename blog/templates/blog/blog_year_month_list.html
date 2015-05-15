@@ -2,14 +2,15 @@
 {% load django_markdown %}
 
 {% block title %}
-List of published blogs
+{{ header }}
 {% endblock %}
 
 {% block header %}
-List of published blogs
+{{ header }}
 {% endblock %}
 
-{% block blog_entries %}
+{% block blog_year_month_entries %}
+{% if object_list %}
 {% for object in object_list %}
 <div class="row">
     <div class="col-md-4">
@@ -24,4 +25,7 @@ List of published blogs
     </div>
 </div>
 {% endfor %}
+{% else %}
+<p>Sorry, no entries for year {{ year }} and month {{ month }}.</p>
+{% endif %}
 {% endblock %}
