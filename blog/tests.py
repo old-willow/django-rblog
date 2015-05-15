@@ -1,4 +1,7 @@
 from django.test import TestCase
+from django.test import Client
+from django.test import LiveServerTestCase
+
 from django.core.urlresolvers import resolve
 from django.utils import timezone
 
@@ -34,6 +37,9 @@ class EntryTestCase(TestCase):
         )
 
     def test_blog_index_page_test(self):
+        """
+        Test if the root url calls the apropriate view.
+        """
         found = resolve('/blog/')  # returns appropriate view function?
         self.assertEqual(found.namespace, 'blog')
         self.assertEqual(found.url_name, 'index')
