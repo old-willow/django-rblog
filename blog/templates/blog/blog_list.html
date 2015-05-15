@@ -16,6 +16,7 @@ List of published blogs
         <h2>{{ object.title }}</h2>
         <p class="meta">Date:{{ object.pub_date }}</p>
         <p class="dimmed">Category: {{ object.category.title }}</p>
+        <p class="dimmed">Author: {{ object.author.firstname }} {{ object.author.lastname }}</p>
         <p>{{ object.grab_body_part|markdown }}...</p>
         <br />
         <p>{{ object.pub_date|date:"Y b d" }}</p>
