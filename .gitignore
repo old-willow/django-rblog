@@ -3,3 +3,4 @@
 *.swap
 */migrations/
 db.sqlite3
+session.vim

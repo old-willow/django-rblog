@@ -57,9 +57,11 @@
 
     <div class="container">
         {% block blog_entries %}{% endblock %}
+        {% block entry %}{% endblock %}
+        {% block back %}{% endblock %}
 
       <footer>
-        <p>© rBlog 2015</p>
+          <p>© rBlog {% now "Y" %}</p>
       </footer>
     </div> <!-- /container -->
 

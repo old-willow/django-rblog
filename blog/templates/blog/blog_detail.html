@@ -1,3 +1,22 @@
 {% extends "base.html" %}
+{% load django_markdown %}
 
+
+{% block title %}
 Detail Page
+{% endblock %}
+
+{% block header %}
+Detail Page
+{% endblock %}
+
+{% block entry %}
+<h3>{{ entry.title }}</h3>
+<p class="meta">Date published: {{ object.pub_date|date:"d. b, Y." }}</p>
+<p class="dimmed">Category: {{ object.category.title }}</p>
+{{ entry.body|markdown }}
+{% endblock %}
+
+{% block back %}
+<p><a class="btn btn-default" href="{% url "blog:index" %}" role="button">« Back to list</a></p>
+{% endblock %}
