@@ -63,33 +63,39 @@ class EntryPublishableQuerySet(models.QuerySet):
     def not_publishable(self):
         return self.filter(publishable=False)
 
-    def year_list(self, year):
-        return self.filter(publishable=True, year=year)
-
 
 class Entry(models.Model):
     title = models.CharField('title',
                              max_length=255,
                              unique_for_date='pub_date',
                              help_text='Title of the blog entry.')
+
     author = models.ForeignKey(Author, verbose_name='author of the blog')
+
     slug = models.SlugField('slug',
                             help_text='Slug field.')
+
     category = models.ForeignKey(Category,
                                  verbose_name='category',
                                  help_text='Choosing a category or topic.')
+
     publishable = models.BooleanField('is publishable?',
                                       default=False,
                                       help_text='Is this blog entry publishable?')
+
     pub_date = models.DateTimeField('publication date',
                                     auto_now_add=True,
                                     help_text='Date when the blog entry was created.')
+
     modified_date = models.DateTimeField('modified date',
                                          auto_now=True,
                                          help_text='Date when the blog entry was modified last time.')
+
     body = MarkdownField('entry',
                          help_text='The blog entry itself.')
+
     enable_comments = models.BooleanField('enable comments', default=False)
+
     featured = models.BooleanField('featured', default=False)
 
     LIVE_STATUS = 1
@@ -104,6 +110,7 @@ class Entry(models.Model):
                                  default=DRAFT_STATUS)
 
     objects = models.Manager()
+
     published = EntryPublishableQuerySet().as_manager()
 
     class Meta:
@@ -127,7 +134,9 @@ class Entry(models.Model):
 
 
 class Image(models.Model):
-    name = models.ImageField(upload_to='blog_images/%Y/%b/%d',
+    name = models.CharField('name of the image', max_length=100,
+                           help_text='This is the title of the image.')
+    image = models.ImageField(upload_to='blog_images/%Y/%b/%d',
                              blank=True, null=True,
                              help_text='Upload an image file.')
 
@@ -148,7 +157,8 @@ class Image(models.Model):
 
 
 class Link(models.Model):
-    title = models.CharField('title', max_length=100)
+    title = models.CharField('title', max_length=100,
+                            help_text='Simple title of the link.')
 
     slug = models.SlugField('slug',
                             help_text='slug filed.')
@@ -160,6 +170,8 @@ class Link(models.Model):
     description = models.TextField('link description',
                                    blank=True, null=True, default=None,
                                    help_text='Description of the link.')
+    url = models.URLField('link', max_length=255,
+                         help_text='The actual url address.')
 
     class Meta:
         ordering = ['-date_added', ]
