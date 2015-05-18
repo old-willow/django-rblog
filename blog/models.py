@@ -84,7 +84,8 @@ class Entry(models.Model):
                                       help_text='Is this blog entry publishable?')
 
     pub_date = models.DateTimeField('publication date',
-                                    auto_now_add=True,
+                                    default=timezone.now,
+                                    #auto_now_add=True,  # In admin can't see this filed because of this.
                                     help_text='Date when the blog entry was created.')
 
     modified_date = models.DateTimeField('modified date',
