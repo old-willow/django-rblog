@@ -26,3 +26,7 @@ List of published blogs
 </div>
 {% endfor %}
 {% endblock %}
+
+{% block by_year %}
+<p><a href="{% url "blog:years_list" %}">Years List »</a></p>
+{% endblock %}

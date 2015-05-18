@@ -47,9 +47,15 @@ class BlogYearMonthList(ListView):
     context_object_name = 'object_list'
 
     def get_queryset(self):
+        print(type(self.kwargs['year']))
+        print('>>>>>>' + self.kwargs['year'])
+        print('>>>>>>' + self.kwargs['month'])
+        #month = Entry.objects.filter(pub_date__month=self.kwargs['month'])
+
         query = Entry.objects.filter(publishable=True,
-                                     pub_date__year=self.kwargs['year'],
-                                     pub_date__month=self.kwargs['month'])
+                                     pub_date__year=self.kwargs['year'])
+                                     #pub_date__month=month.strftime('%b'))
+                                     #pub_date__month=self.kwargs['month'])
         return query
 
     def get_context_data(self, **kwargs):
@@ -76,3 +82,19 @@ class BlogDetailView(DetailView):
     #                             month=self.month,
     #                             day=self.day,
     #                             slug=self.slug)
+
+
+def blog_list_years(request):
+    ly = []
+    years = Entry.objects.all()
+    for e in years:
+        ly.append(e.pub_date.year)
+
+    sorted(ly)
+    ly = set(ly)
+    context = {'years': ly}
+
+    return render_to_response(
+        'blog/years_list.html',
+        context,
+        context_instance=RequestContext(request))

@@ -1,0 +1,3 @@
+{% for yr in years %}
+<a href="{% url "blog:year_list" year=yr %}">{{  yr }}</a>
+{% endfor %}
