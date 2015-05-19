@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block months_list %}
+<a href="#">All blogs</a>
+{% for mn in months %}
+<a href="{% url "blog:year_month_list" year=year month=mn %}">{{ mn }}</a>
+{% endfor %}
+
+<br />
+<br />
+<a href="{% url "blog:years_list" %}">List by Years »</a>
+{% endblock %}
