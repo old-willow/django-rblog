@@ -40,7 +40,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="./base_files/base.html">rBlog App</a>
+          <a class="navbar-brand" href="{% url "blog:index" %}">rBlog App</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
         </div><!--/.navbar-collapse -->
@@ -63,8 +63,10 @@
         {% block by_year %}{% endblock %}
         {% block by_year_month %}{% endblock %}
         {% block back %}{% endblock %}
-        {% block years_list %}{% endblock %}
+        {% block years_list_links %}{% endblock %}
+        {% block months_list_links %}{% endblock %}
 
+      <hr>
       <footer>
           <p>© rBlog {% now "Y" %}</p>
       </footer>

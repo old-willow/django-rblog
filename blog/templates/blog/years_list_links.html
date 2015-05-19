@@ -1,9 +1,8 @@
 {% extends "base.html" %}
-{% load django_markdown %}
 
-{% block years_list %}
+{% block years_list_links %}
 {% for yr in years %}
-<a href="{% url "blog:year_list" year=yr %}">{{  yr }}</a>
+<a href="{% url "blog:months_list_links" year=yr %}">{{  yr }}</a>
 <br />
 {% endfor %}
 

@@ -15,7 +15,7 @@ def blog_list(request):
 
 class BlogIndex(ListView):
     model = Entry
-    queryset = Entry.published.publishable()
+    queryset = Entry.published.publishable()[:3]
     template_name = 'blog/blog_list.html'
     #paginate_by = 3
     context_object_name = 'object_list'  # This is allready by default.
@@ -36,6 +36,23 @@ class BlogYearList(ListView):
         context = super(BlogYearList, self).get_context_data(**kwargs)
         context['year'] = self.kwargs['year']
         context['header'] = u'List of blogs in ' + unicode(context['year'])
+
+        # Collect the months for presenting it in template as links.
+        lm = []  # list months for link 3 chars.
+        months_full = []  ## months full name of months for displaying as link.
+        months = Entry.objects.filter(pub_date__year=self.kwargs['year'])
+
+        # Collecting months.
+        for m in months:
+            lm.append(m.pub_date.strftime("%b"))
+            months_full.append(m.pub_date.strftime("%B"))
+        #sorted(lm)
+        lm = set(lm)
+        months_full = set(months_full)
+
+        context['months'] = lm
+        context['months_full'] = months_full
+
         return context
 
 
@@ -47,9 +64,9 @@ class BlogYearMonthList(ListView):
     context_object_name = 'object_list'
 
     def get_queryset(self):
-        print(type(self.kwargs['year']))
-        print('>>>>>>' + self.kwargs['year'])
-        print('>>>>>>' + self.kwargs['month'])
+        #print(type(self.kwargs['year']))
+        #print('>>>>>>' + self.kwargs['year'])
+        #print('>>>>>>' + self.kwargs['month'])
         #month = Entry.objects.filter(pub_date__month=self.kwargs['month'])
 
         query = Entry.objects.filter(publishable=True,
@@ -85,16 +102,38 @@ class BlogDetailView(DetailView):
 
 
 def blog_list_years(request):
-    ly = []
+    ly = []  # list years
     years = Entry.objects.all()
-    for e in years:
-        ly.append(e.pub_date.year)
 
+    # Collecting years.
+    for y in years:
+        ly.append(y.pub_date.year)
     sorted(ly)
     ly = set(ly)
-    context = {'years': ly}
 
-    return render_to_response(
-        'blog/years_list.html',
-        context,
-        context_instance=RequestContext(request))
+    context = { 'years': ly }
+
+    return render_to_response('blog/years_list_links.html',
+                              context,
+                              context_instance=RequestContext(request))
+
+def blog_list_months(request, year):
+    #lm = []  # list months
+    mn = {}
+    months = Entry.objects.filter(pub_date__year=year)
+
+    # Collecting months.
+    for m in months:
+        if not mn.has_key(m.pub_date.strftime("%b")):
+            mn[m.pub_date.strftime("%b")] = (m.pub_date.strftime("%b"), m.pub_date.strftime("%B"))
+        #lm.append(m.pub_date.strftime("%B"))
+    #sorted(lm)
+    #lm = set(lm)
+
+    #context = { 'months': lm, 'year': year }
+    print ">>>>>>>>>>>", mn
+    context = { 'months': mn , 'year': year }
+
+    return render_to_response('blog/months_list_links.html',
+                              context,
+                              context_instance=RequestContext(request))

@@ -29,4 +29,6 @@
 {% else %}
 <p>Sorry, no entries for year {{ year }} and month {{ month }}.</p>
 {% endif %}
+
+<a href="{% url "blog:years_list" %}">Year list »</a>
 {% endblock %}
