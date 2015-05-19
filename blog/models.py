@@ -123,7 +123,7 @@ class Entry(models.Model):
         return self.title
 
     def grab_body_part(self):
-        return self.body[0:250]
+        return self.body[0:250] + "..."
 
     def get_absolute_url(self):
         return reverse('blog:detail', kwargs={

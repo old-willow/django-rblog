@@ -17,7 +17,7 @@ List of published blogs
         <p class="meta">Date:{{ object.pub_date }}</p>
         <p class="dimmed">Category: {{ object.category.title }}</p>
         <p class="dimmed">Author: {{ object.author.firstname }} {{ object.author.lastname }}</p>
-        <p>{{ object.grab_body_part|markdown }}...</p>
+        <p>{{ object.grab_body_part|markdown }}</p>
         <br />
         <p>{{ object.pub_date|date:"Y b d" }}</p>
         <p>{{ object.pub_date|date:"Y" }}|{{ object.pub_date|date:"b" }}|{{ object.pub_date|date:"d" }}/{{ object.slug }}</p>
@@ -28,5 +28,5 @@ List of published blogs
 {% endblock %}
 
 {% block by_year %}
-<p><a href="{% url "blog:years_list" %}">Years List »</a></p>
+<p><a href="{% url "blog:years_list" %}">List by Years »</a></p>
 {% endblock %}
