@@ -33,12 +33,34 @@ class BlogIndex(ListView):
 class AllArticles(ListView):
     model = Entry
     template_name = 'blog/all_articles_list.html'
-    queryset = Entry.published.publishable()
+    #queryset = Entry.published.publishable()
     context_object_name = 'object_list'
+
+    def get_queryset(self):
+        query = Entry.published.publishable()
+        return query
 
     def get_context_data(self, **kwargs):
         context = super(AllArticles, self).get_context_data(**kwargs)
-        context['header'] = 'List all articles unordered'
+        context['header'] = 'List all articles unsorted!'
+
+        return context
+
+
+class EntriesByTag(ListView):
+    model = Entry
+    #queryset =
+    template_name = 'blog/by_tags_list.html'
+    context_object_name = 'object_list'
+
+    def get_queryset(self):
+        query = Entry.objects.filter(publishable=True,
+                                     tag__name__in=[self.kwargs['tag']])
+        return query
+
+    def get_context_data(self, **kwargs):
+        context = super(EntriesByTag, self).get_context_data(**kwargs)
+        context['header'] = 'List of articles filtered by tags'
 
         return context
 

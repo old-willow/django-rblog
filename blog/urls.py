@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, include, url
 
 from .views import (BlogIndex, BlogYearList, AllArticles,
-                    BlogYearMonthList, BlogDetailView,
+                    EntriesByTag, BlogYearMonthList, BlogDetailView,
                     blog_list_years, blog_list_months)
 
 urlpatterns = patterns(
@@ -13,6 +13,10 @@ urlpatterns = patterns(
     url(r'^all/$',
         AllArticles.as_view(),
         name='all_articles'),
+
+    url(r'^tags/(?P<tag>\S+)/$',
+       EntriesByTag.as_view(),
+       name='by_tag'),
 
     url(r'^(?P<year>\d{4})/$',
         BlogYearList.as_view(),
