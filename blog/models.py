@@ -3,6 +3,8 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
+from taggit.managers import TaggableManager
+
 from django_markdown.models import MarkdownField
 
 
@@ -94,6 +96,9 @@ class Entry(models.Model):
 
     body = MarkdownField('entry',
                          help_text='The blog entry itself.')
+
+    tag = TaggableManager(verbose_name='tags',
+                         help_text='Add any tag comma or space separated or multi word tag in double quotes.')
 
     enable_comments = models.BooleanField('enable comments', default=False)
 
