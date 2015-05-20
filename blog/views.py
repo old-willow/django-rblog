@@ -30,6 +30,19 @@ class BlogIndex(ListView):
         return context
 
 
+class AllArticles(ListView):
+    model = Entry
+    template_name = 'blog/all_articles_list.html'
+    queryset = Entry.published.publishable()
+    context_object_name = 'object_list'
+
+    def get_context_data(self, **kwargs):
+        context = super(AllArticles, self).get_context_data(**kwargs)
+        context['header'] = 'List all articles unordered'
+
+        return context
+
+
 class BlogYearList(ListView):
     model = Entry
     #queryset = Entry.objects.filter(year=self.kwargs['year'], publishable=True)
