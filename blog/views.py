@@ -3,6 +3,8 @@ from django.template import RequestContext
 
 from django.views.generic import ListView, DetailView
 
+from taggit.models import Tag
+
 from .models import Entry
 
 
@@ -19,6 +21,13 @@ class BlogIndex(ListView):
     template_name = 'blog/blog_list.html'
     #paginate_by = 3
     context_object_name = 'object_list'  # This is allready by default.
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogIndex, self).get_context_data(**kwargs)
+        tags = Tag.objects.all()
+        context['tags'] = tags
+
+        return context
 
 
 class BlogYearList(ListView):

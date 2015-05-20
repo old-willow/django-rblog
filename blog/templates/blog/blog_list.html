@@ -26,6 +26,12 @@ List of published blogs
 {% endfor %}
 {% endblock %}
 
+{% block tags_list %}
+{% for tag in tags %}
+<p><a href="#">{{ tag.name }}</a></p>
+{% endfor %}
+{% endblock %}
+
 {% block by_year %}
 <p><a href="{% url "blog:years_list_links" %}">List by Years »</a></p>
 {% endblock %}
